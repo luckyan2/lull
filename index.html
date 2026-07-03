@@ -14,57 +14,102 @@
         background: #d0cabe;
         min-height: 100vh;
         padding: 15px 0;
+        font-family: system-ui, sans-serif;
       }
-      /* 顶部标题 xx小镇，缩小和下方容器的间距 */
-      .page-title {
+      /* 统一宽度容器，所有顶部元素和下方大容器左右对齐 */
+      .wrap-width {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      /* 第一行：左上角给我留言，右上角设置 */
+      .top-bar-msg-set {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: clamp(13px, 1.8vw, 16px);
+        color: #000;
+        margin-bottom: 15px;
+      }
+      .msg-left,
+      .set-right {
+        cursor: pointer;
+      }
+      /* 第二行：居中小字地址，跟随页面缩放 */
+      .text-address {
         text-align: center;
-        font-size: 24px;
-        margin-bottom: 6px; /* 原15px缩小为6px，上下间距大幅收紧 */
-        color: #222;
+        font-size: clamp(11px, 1.5vw, 13px);
+        color: #000;
+        margin-bottom: 2px;
+        white-space: nowrap;
       }
-      /* 外层米白大容器 */
+      /* ========== 这里是小镇标题字号调整区域 + 打字动画 ========== */
+      /* clamp(最小手机字号, 缩放速度vw, 最大电脑字号) */
+      .town-title {
+        text-align: center;
+        font-size: clamp(28px, 6vw, 80px);
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: #000;
+        white-space: nowrap;
+        overflow: hidden;
+        /* 打字动画：4个字符，总时长1.2秒，只播放一次，结束保持最后状态 */
+        animation: typing 1.6s steps(7, end) forwards;
+        /* 初始宽度0，动画过程慢慢撑开 */
+        width: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* 打字关键帧动画 */
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+      /* ============================================== */
+      /* 第四行：居中头像+用户名，整体字号自适应 */
+      .user-line {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(6px, 1vw, 10px);
+        margin-bottom: 24px;
+      }
+      .avatar {
+        width: clamp(20px, 4vw, 36px);
+        height: clamp(20px, 4vw, 36px);
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid #000;
+        object-fit: cover;
+      }
+      .username-text {
+        font-size: clamp(10px, 2vw, 16px);
+        color: #000;
+        white-space: nowrap;
+        /* 新增：用户名底部横线 */
+        border-bottom: 1px solid #000;
+        padding-bottom: 2px;
+      }
+      /* 米白色大容器：内边距动态变化，窗口越窄，留白越小 */
       .container {
         width: 90%;
         max-width: 1200px;
         margin: 0 auto;
         background-color: #efece3;
         border: 1px solid #000000;
-        padding: 12px 20px 20px 20px; /* 顶部内边距从20px改为12px，减少头部到头像栏距离 */
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
+        padding: clamp(12px, 3vw, 30px);
       }
-      /* 顶部头像+设置栏，上下留白减少 */
-      .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 2px 0;
-      }
-      .setting-box {
-        background: #e6decb;
-        border: 1px solid transparent;
-        padding: 3px 10px;
-        font-size: 18px;
-        color: #000000;
-        cursor: pointer;
-      }
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: #ececec;
-        border: 1px solid #000000;
-        object-fit: cover;
-      }
-      /* 横版2:1视频容器，宽:高=2:1 */
+      /* 横向10:4视频比例容器 */
       .video-wrap {
         width: 100%;
         position: relative;
-        padding-top: 50%;
+        padding-top: 40%; /* 宽10 高4 → 4/10=40% */
         overflow: hidden;
-        border: 1px solid #000000;
-        border-radius: 5px;
+        border: 1px solid #000;
       }
       .video-placeholder {
         position: absolute;
@@ -74,46 +119,55 @@
         height: 100%;
         object-fit: cover;
       }
-      /* 底部意见箱+网址（容器外部，宽度对齐容器） */
-      .bottom-row {
+      /* 页面最底部，容器外：意见箱 | 网址 */
+      .bottom-link-row {
         width: 90%;
         max-width: 1200px;
-        margin: 12px auto 0;
+        margin: 20px auto 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+        font-size: 12px;
       }
       .feedback-box {
-        font-size: 12px;
         color: #000;
         cursor: pointer;
       }
-      .divider {
-        font-size: 12px;
+      .divider-line {
         color: #000;
       }
       .footer-link {
-        font-size: 12px;
         color: #7d776b;
+        text-decoration: none;
       }
     </style>
   </head>
   <body>
-    <!-- 容器上方标题 -->
-    <h2 class="page-title">xx小镇</h2>
+    <!-- 第一行 给我留言 + 设置 -->
+    <div class="wrap-width top-bar-msg-set">
+      <div class="msg-left">给我留言</div>
+      <div class="set-right">设置</div>
+    </div>
 
+    <!-- 第二行 居中地址 -->
+    <div class="wrap-width text-address">地址</div>
+
+    <!-- 第三行 大标题 xx小镇（打字动画） -->
+    <div class="wrap-width town-title">欢迎来吃阳春面</div>
+
+    <!-- 第四行 头像+用户名（容器外部，头像尺寸+文字同步缩放） -->
+    <div class="wrap-width user-line">
+      <img
+        class="avatar"
+        src="https://preview.qiantucdn.com/freepik/512/4534/4534033.png!w1024_new_small_1"
+        alt="头像"
+      />
+      <span class="username-text">用户名</span>
+    </div>
+
+    <!-- 米白色大容器，内部仅视频，padding随窗口同步缩小 -->
     <div class="container">
-      <!-- 顶部头像+设置 -->
-      <div class="top-bar">
-        <img
-          class="avatar"
-          src="https://preview.qiantucdn.com/freepik/512/4534/4534033.png!w1024_new_small_1"
-          alt="头像"
-        />
-        <div class="setting-box">设置</div>
-      </div>
-      <!-- 2:1横向宽屏视频区域 -->
       <div class="video-wrap">
         <img
           class="video-placeholder"
@@ -123,11 +177,11 @@
       </div>
     </div>
 
-    <!-- 容器外部底部行 -->
-    <div class="bottom-row">
+    <!-- 页面最底部 意见箱 | 网址 -->
+    <div class="bottom-link-row">
       <div class="feedback-box">意见箱</div>
-      <span class="divider">|</span>
-      <a class="footer-link" href="放链接">网址</a>
+      <span class="divider-line">|</span>
+      <a class="footer-link" href="放链接">一个网址</a>
     </div>
   </body>
 </html>
