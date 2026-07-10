@@ -20,7 +20,6 @@
         padding: 15px 0;
         font-family: system-ui, sans-serif;
       }
-      /* 内容最大宽度包装器 */
       .wrap-width {
         width: 90%;
         max-width: 1200px;
@@ -40,10 +39,10 @@
       }
       .msg-left {
         cursor: pointer;
-      } /* 左侧“给我留言”文字 */
+      }
       .set-right {
         cursor: pointer;
-      } /* 右侧“设置”文字 */
+      }
 
       /* =========================================================
                📍 3. 地址文字
@@ -72,7 +71,6 @@
         margin-left: auto;
         margin-right: auto;
       }
-      /* 标题从左到右展开的动画 */
       @keyframes widthTyping {
         from {
           width: 0;
@@ -93,7 +91,6 @@
         margin-bottom: 24px;
       }
       .avatar {
-        /* 头像图片 */
         width: clamp(20px, 4vw, 36px);
         height: clamp(20px, 4vw, 36px);
         border-radius: 50%;
@@ -102,7 +99,6 @@
         object-fit: cover;
       }
       .username-text {
-        /* 用户名文字 */
         font-size: clamp(10px, 2vw, 16px);
         color: #000;
         white-space: nowrap;
@@ -122,7 +118,6 @@
         padding: clamp(12px, 3vw, 30px);
       }
       .video-wrap {
-        /* 视频/图片占位容器 */
         width: 100%;
         position: relative;
         padding-top: 40%;
@@ -130,7 +125,6 @@
         border: 1px solid #000;
       }
       .video-placeholder {
-        /* 背景占位图 */
         position: absolute;
         top: 0;
         left: 0;
@@ -139,7 +133,6 @@
         object-fit: cover;
       }
       .video-mask {
-        /* 弹窗遮罩层（半透明背景） */
         position: absolute;
         inset: 0;
         background: rgba(0, 0, 0, 0.35);
@@ -150,7 +143,6 @@
         padding: 4px;
       }
       .mask-inner {
-        /* 弹窗内部白色/带背景的内容卡片 */
         width: 90%;
         height: 90%;
         background-image: url("https://i.imgs.ovh/2026/07/06/da17431044c46293bc8dc1c12f8bf1b5.png");
@@ -179,7 +171,6 @@
         flex-direction: column;
         align-items: center;
       }
-      /* ---- 默认显示封面页 page0，隐藏 page1 / page2 ---- */
       .page0 {
         display: flex;
         z-index: 20;
@@ -190,7 +181,6 @@
         padding-bottom: clamp(20px, 5vw, 50px);
       }
       .page1 {
-        /* 第一页：欢迎语 + 两个方框 */
         display: none;
         z-index: 10;
         justify-content: space-between;
@@ -198,14 +188,12 @@
         padding-bottom: 4px;
       }
       .page2 {
-        /* 第二页：邀请文字 + 接受按钮 */
         display: none;
         z-index: 10;
         justify-content: center;
         gap: clamp(8px, 1.5vw, 14px);
       }
 
-      /* ---- 页面切换状态（由JS控制） ---- */
       .show-page1 .page0 {
         display: none;
       }
@@ -226,14 +214,12 @@
                🎬 8. 页面0：封面图片 + “打开”按钮
                ========================================================= */
       .page0-btn {
-        /* 封面上的“打开”按钮 */
         padding: clamp(1px, 0.4vw, 3px) clamp(8px, 3vw, 26px);
         border: 1px solid #000;
         background: #efece3;
         cursor: pointer;
         font-size: clamp(8px, 1.2vw, 16px);
         transition: 0.2s;
-        /* 无淡入，直接显示 */
       }
       .page0-btn:hover {
         background: #d9d1be;
@@ -255,50 +241,76 @@
       }
 
       /* =========================================================
-               🖼️ 10. 页面1：双人方框 (镇长/副镇长)
+               🖼️ 10. 页面1：四张图片 (宽度按比例分配)
                ========================================================= */
+
+      /* ---- 10-A. 父容器：控制四张图片的整体布局 ---- */
       .box-row {
-        /* 两个方框的父容器 */
-        width: 100%;
+        width: 90%;
         display: flex;
         justify-content: center;
-        gap: clamp(3px, 2vw, 9px);
+        align-items: stretch;
+        gap: clamp(4px, 1.2vw, 12px); /* 间隙保持不变 */
         padding: 0 clamp(2px, 1vw, 10px);
         margin-bottom: clamp(0px, 2vw, 15px);
       }
 
+      /* ---- 10-B. 单张图片基础样式：不再设固定宽度，用 flex 比例控制 ---- */
       .flat-box {
-        /* 方框通用样式：无淡入，用 visibility 控制延迟显示 */
-        width: 49%;
-        aspect-ratio: 3.5 / 1;
+        /* -------- 🔽 使用 flex 比例分配宽度 -------- */
+        flex: 1 1 0; /* flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
+        /* 然后在子类中覆盖 flex-grow 来调整比例 */
+        /* ----------------------------------------- */
+
+        /* -------- 高度保持之前调整好的值 -------- */
+        height: clamp(80px, 10vw, 130px);
+
         border: 1px solid #00000000;
         background-size: cover;
         background-position: center;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding: clamp(4px, 1vw, 1px);
-        gap: 1px;
-        visibility: hidden; /* 初始隐藏，由 animation 控制显示 */
-        animation-fill-mode: forwards;
-      }
-      .box-slone {
-        /* 左侧方框：镇长斯隆，延迟 6.4s 后瞬间出现 */
-        background-image: url("https://i.imgs.ovh/2026/07/06/da17431044c46293bc8dc1c12f8bf1b5.png");
+        justify-content: flex-start;
         align-items: flex-start;
-        text-align: left;
+        padding: clamp(4px, 1vw, 10px);
+        gap: 1px;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+        overflow: hidden;
+      }
+
+      /* ---- 10-C. 四张图片各自的 flex-grow 比例 ---- */
+      /* 第一张 & 第三张：宽一些，flex-grow: 3 */
+      .box-1,
+      .box-3 {
+        flex-grow: 3; /* 👈 调整此值可改变第一三张宽度（相对于第二四张） */
+      }
+      /* 第二张 & 第四张：窄一些，flex-grow: 1 */
+      .box-2,
+      .box-4 {
+        flex-grow: 1; /* 👈 调整此值可改变第二四张宽度（相对于第一三张） */
+      }
+
+      /* ---- 10-D. 各自背景图（可替换） ---- */
+      .box-1 {
+        background-image: url("https://n.sinaimg.cn/sinakd20118/214/w2048h1366/20241101/8af6-f2c42e2356f4c886b889c8a0ee4a17c4.jpg");
         padding-left: clamp(10px, 2vw, 30px);
         animation: instantShow 0s linear 3.4s forwards;
       }
-      .box-mike {
-        /* 右侧方框：副镇长麦克，延迟 15.3s 后瞬间出现 */
-        background-image: url("https://i.imgs.ovh/2026/07/06/da17431044c46293bc8dc1c12f8bf1b5.png");
-        align-items: flex-start;
-        text-align: left;
+      .box-2 {
+        background-image: url("https://pic.616pic.com/ys_bnew_img/00/64/95/G9REB94D6m.jpg");
+        animation: instantShow 0s linear 3.4s forwards;
+      }
+      .box-3 {
+        background-image: url("https://n.sinaimg.cn/sinakd20118/214/w2048h1366/20241101/8af6-f2c42e2356f4c886b889c8a0ee4a17c4.jpg");
         padding-left: clamp(10px, 2vw, 30px);
         animation: instantShow 0s linear 14.2s forwards;
       }
-      /* 瞬间出现关键帧（替代淡入） */
+      .box-4 {
+        background-image: url("https://pic.616pic.com/ys_bnew_img/00/64/95/G9REB94D6m.jpg");
+        animation: instantShow 0s linear 14.2s forwards;
+      }
+
       @keyframes instantShow {
         from {
           visibility: hidden;
@@ -308,14 +320,18 @@
         }
       }
 
-      /* 方框内部的文字（打字动画延迟各自独立） */
+      /* ---- 10-E. 方框内文字样式 ---- */
       .flat-box .type-line {
-        font-size: clamp(4px, 1.7vw, 14px);
-        line-height: 1.3;
+        font-size: clamp(7px, 1.4vw, 13px);
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+        animation-fill-mode: forwards;
       }
 
       /* =========================================================
-               ⌨️ 11. 打字动画 (所有逐字出现文字共用)这里写错了，这里的文字大小只能操控第二页
+               ⌨️ 11. 打字动画 (所有逐字出现文字)
                ========================================================= */
       .type-line {
         font-size: clamp(7px, 1.4vw, 29px);
@@ -337,44 +353,42 @@
       /* ---- 顶部欢迎文字 ---- */
       .line1 {
         animation: typing 3.5s steps(12, end) 0.5s forwards;
-      } /* 第一行：欢迎来到无风镇 */
+      }
       .line4 {
         animation: typing 3.5s steps(14, end) 1.7s forwards;
-      } /* 第二行：愿你在小镇... */
+      }
 
-      /* ---- 左侧斯隆方框内文字 ---- */
+      /* ---- 第一张图片：斯隆的文字 ---- */
       .sl1 {
         animation: typing 1.8s steps(14, end) 11.4s forwards;
-      } /* 我是镇长斯隆 */
+      }
       .sl2 {
         animation: typing 1.8s steps(12, end) 12.2s forwards;
-      } /* 负责维护小镇的秩序 */
+      }
       .sl3 {
         animation: typing 1.4s steps(8, end) 13.2s forwards;
-      } /* 包括但不限于揪出坏蛋 */
+      }
 
-      /* ---- 右侧麦克方框内文字 ---- */
+      /* ---- 第三张图片：麦克的文字 ---- */
       .mk1 {
         animation: typing 1.6s steps(12, end) 19.5s forwards;
-      } /* 我是副镇长麦克 */
+      }
       .mk2 {
         animation: typing 1.8s steps(18, end) 20.4s forwards;
-      } /* 负责维系居民间的友好交流 */
+      }
       .mk3 {
         animation: typing 1.4s steps(9, end) 22.2s forwards;
-      } /* 包括但不限于送信 */
+      }
 
       /* =========================================================
                📨 12. 页面2：邀请文字
                ========================================================= */
       .invite-line {
-        /* 居民 w 向你发起邀请 */
         animation: typing 4s steps(26, end) 1.2s forwards;
         text-align: center;
         margin: 0 auto;
       }
       .underline-w {
-        /* 字母 w 下面的棕色下划线 */
         border-bottom: 2px solid #704828;
       }
 
@@ -382,12 +396,11 @@
                🔘 13. 通用按钮 & 特定按钮 (下一页/接受邀请)
                ========================================================= */
       .btn-base {
-        /* 弹窗内按钮基础样式（共用） */
         padding: clamp(1px, 0.4vw, 3px) clamp(8px, 3vw, 26px);
         border: 1px solid #000;
         background: #efece3;
         cursor: pointer;
-        font-size: clamp(8px, 1.2vw, 16px);
+        font-size: clamp(8px, 1.2vw, 20px);
         transition: 0.2s;
       }
       .btn-base:hover {
@@ -395,7 +408,6 @@
       }
 
       #nextPageBtn {
-        /* 页面1的“下一页”按钮：延迟 25s 后瞬间出现（无淡入） */
         align-self: center;
         margin-top: 0;
         visibility: hidden;
@@ -403,13 +415,12 @@
         margin-bottom: clamp(1px, 2vw, 26px);
       }
       #acceptBtn {
-        /* 页面2的“接受邀请”按钮：延迟 3s 后瞬间出现（无淡入） */
         visibility: hidden;
         animation: instantShow 0s linear 3.4s forwards;
       }
 
       /* =========================================================
-               🚫 14. 关闭弹窗 (点击接受邀请后触发)
+               🚫 14. 关闭弹窗
                ========================================================= */
       .mask-hide {
         display: none !important;
@@ -431,14 +442,14 @@
       .feedback-box {
         color: #000;
         cursor: pointer;
-      } /* 小镇手册 */
+      }
       .divider-line {
         color: #000;
-      } /* 分隔符 | */
+      }
       .footer-link {
         color: #7d776b;
         text-decoration: none;
-      } /* 如何入住无风镇 */
+      }
 
       /* =========================================================
                📱 16. 移动端适配 (小屏幕微调)
@@ -452,17 +463,47 @@
         .page2 {
           padding: 6px;
         }
+
         .box-row {
-          gap: 4px;
-          padding: 0;
+          flex-wrap: nowrap;
+          gap: 3px;
+          padding: 0 2px;
+          overflow: visible;
         }
+
         .flat-box {
-          width: 46%;
-          aspect-ratio: 3.2 / 1;
-          padding: 2px 4px;
+          /* flex 比例不变，但高度降低使图片更扁 */
+          height: clamp(35px, 4.5vw, 55px);
+          padding: 3px 4px;
+          flex-shrink: 1;
+        }
+
+        /* 确保比例在手机端同样生效 */
+        .box-1,
+        .box-3 {
+          flex-grow: 3;
+        }
+        .box-2,
+        .box-4 {
+          flex-grow: 1;
+        }
+
+        .flat-box .type-line {
+          font-size: clamp(4px, 1vw, 8px);
+          line-height: 1.2;
+        }
+        .top-welcome .type-line {
+          font-size: clamp(6px, 1.2vw, 10px);
+        }
+      }
+
+      /* 平板等中等屏幕优化 */
+      @media (min-width: 481px) and (max-width: 768px) {
+        .flat-box {
+          height: clamp(70px, 9vw, 110px);
         }
         .flat-box .type-line {
-          font-size: clamp(1px, 0.8vw, 8px);
+          font-size: clamp(6px, 1.2vw, 10px);
         }
       }
     </style>
@@ -505,11 +546,10 @@
           <div class="mask-inner" id="maskWrap">
             <!-- ===== PAGE 0：封面图片 + 打开按钮 ===== -->
             <div class="page0" id="page0">
-              <!-- 背景图在 CSS .page0 中设置 -->
               <button class="page0-btn" id="openBtn">打开</button>
             </div>
 
-            <!-- ===== PAGE 1：欢迎语 + 两个方框 + 下一页 ===== -->
+            <!-- ===== PAGE 1：欢迎语 + 四张图片 + 下一页 ===== -->
             <div class="page1" id="page1">
               <div class="top-welcome">
                 <div class="type-line line1">欢迎来到无风镇。</div>
@@ -517,18 +557,25 @@
               </div>
 
               <div class="box-row">
-                <!-- 左侧方框：镇长斯隆 -->
-                <div class="flat-box box-slone">
+                <!-- 第一张：镇长斯隆（带文字），宽度比例为3 -->
+                <div class="flat-box box-1">
                   <div class="type-line sl1">我是镇长斯隆，</div>
                   <div class="type-line sl2">负责维护小镇的秩序，</div>
                   <div class="type-line sl3">包括但不限于揪出坏蛋。</div>
                 </div>
-                <!-- 右侧方框：副镇长麦克 -->
-                <div class="flat-box box-mike">
+
+                <!-- 第二张：纯图片，宽度比例为1 -->
+                <div class="flat-box box-2"></div>
+
+                <!-- 第三张：副镇长麦克（带文字），宽度比例为3 -->
+                <div class="flat-box box-3">
                   <div class="type-line mk1">我是副镇长麦克，</div>
                   <div class="type-line mk2">负责维系居民间的友好交流，</div>
                   <div class="type-line mk3">包括但不限于送信。</div>
                 </div>
+
+                <!-- 第四张：纯图片，宽度比例为1 -->
+                <div class="flat-box box-4"></div>
               </div>
 
               <button class="btn-base" id="nextPageBtn">下一页</button>
@@ -566,24 +613,20 @@
         const acceptBtn = document.getElementById("acceptBtn");
         const maskMain = document.getElementById("videoMask");
 
-        // ----- 打开按钮：page0 → page1 -----
         openBtn.addEventListener("click", function () {
           maskWrap.classList.remove("show-page2");
           maskWrap.classList.add("show-page1");
         });
 
-        // ----- 下一页：page1 → page2 -----
         nextBtn.addEventListener("click", function () {
           maskWrap.classList.remove("show-page1");
           maskWrap.classList.add("show-page2");
         });
 
-        // ----- 接受邀请：关闭弹窗 -----
         acceptBtn.addEventListener("click", function () {
           maskMain.classList.add("mask-hide");
         });
 
-        // 初始状态：只显示 page0
         maskWrap.classList.remove("show-page1", "show-page2");
       })();
     </script>
