@@ -9,17 +9,20 @@
       /* =========================================================
                🏠 1. 全局重置 & 基础样式
                ========================================================= */
+      /*【* 全局通配符：所有元素默认内外边距、盒模型统一】 */
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
+      /*【body 页面整体背景、基础字体、最小高度】 */
       body {
         background: #d0cabe;
         min-height: 100vh;
         padding: 15px 0;
         font-family: system-ui, sans-serif;
       }
+      /*【.wrap-width 宽度自适应容器：顶部文字、标题、用户头像外层容器】 */
       .wrap-width {
         width: 90%;
         max-width: 1200px;
@@ -29,6 +32,7 @@
       /* =========================================================
                📌 2. 顶部栏：留言 & 设置
                ========================================================= */
+      /*【.top-bar-msg-set 页面最顶部一行：左侧给我留言、右侧设置】 */
       .top-bar-msg-set {
         display: flex;
         justify-content: space-between;
@@ -37,9 +41,11 @@
         color: #000;
         margin-bottom: 15px;
       }
+      /*【.msg-left 顶部左侧文字：给我留言】 */
       .msg-left {
         cursor: pointer;
       }
+      /*【.set-right 顶部右侧文字：设置】 */
       .set-right {
         cursor: pointer;
       }
@@ -47,6 +53,7 @@
       /* =========================================================
                📍 3. 地址文字
                ========================================================= */
+      /*【.text-address 标题上方居中小字：地址】 */
       .text-address {
         text-align: center;
         font-size: clamp(11px, 1.5vw, 13px);
@@ -58,6 +65,7 @@
       /* =========================================================
                🏷️ 4. 主标题 & 宽度打字动画
                ========================================================= */
+      /*【.town-title 页面大标题：品尝红烧牛肉面，自带宽度打字动画】 */
       .town-title {
         text-align: center;
         font-size: clamp(28px, 6vw, 80px);
@@ -71,6 +79,7 @@
         margin-left: auto;
         margin-right: auto;
       }
+      /*【@keyframes widthTyping 标题专用打字关键帧动画】 */
       @keyframes widthTyping {
         from {
           width: 0;
@@ -83,6 +92,7 @@
       /* =========================================================
                👤 5. 用户头像 & 名称
                ========================================================= */
+      /*【.user-line 头像+用户名整行容器】 */
       .user-line {
         display: flex;
         justify-content: center;
@@ -90,6 +100,7 @@
         gap: clamp(6px, 1vw, 10px);
         margin-bottom: 24px;
       }
+      /*【.avatar 圆形用户头像图片】 */
       .avatar {
         width: clamp(20px, 4vw, 36px);
         height: clamp(20px, 4vw, 36px);
@@ -98,6 +109,7 @@
         border: 1px solid #000;
         object-fit: cover;
       }
+      /*【.username-text 头像右侧文字：用户名，自带底部黑线】 */
       .username-text {
         font-size: clamp(10px, 2vw, 16px);
         color: #000;
@@ -109,14 +121,16 @@
       /* =========================================================
                🖼️ 6. 主容器 & 视频遮罩层
                ========================================================= */
+      /*【.container 弹窗外层大容器，米色边框底色】 */
       .container {
-        width: 90%;
+        width: 95%;
         max-width: 1200px;
         margin: 0 auto;
         background-color: #efece3;
         border: 1px solid #000000;
         padding: clamp(12px, 3vw, 30px);
       }
+      /*【.video-wrap 视频比例容器，控制弹窗整体宽高比例】 */
       .video-wrap {
         width: 100%;
         position: relative;
@@ -124,6 +138,7 @@
         overflow: hidden;
         border: 1px solid #000;
       }
+      /*【.video-placeholder 底层静态背景大图】 */
       .video-placeholder {
         position: absolute;
         top: 0;
@@ -132,6 +147,7 @@
         height: 100%;
         object-fit: cover;
       }
+      /*【.video-mask 黑色半透明遮罩，承载弹窗三层页面】 */
       .video-mask {
         position: absolute;
         inset: 0;
@@ -142,6 +158,7 @@
         z-index: 10;
         padding: 4px;
       }
+      /*【.mask-inner 弹窗内层内容容器，承载page0/page1/page2】 */
       .mask-inner {
         width: 90%;
         height: 90%;
@@ -158,6 +175,7 @@
       /* =========================================================
                📄 7. 弹窗内部三页面容器 (page0/1/2)
                ========================================================= */
+      /*【.page0 弹窗封面页、.page1第一内容页、.page2第二邀请页 公共基础样式】 */
       .page0,
       .page1,
       .page2 {
@@ -171,6 +189,7 @@
         flex-direction: column;
         align-items: center;
       }
+      /*【.page0 弹窗初始封面全屏图片层，最上层】 */
       .page0 {
         display: flex;
         z-index: 20;
@@ -180,13 +199,15 @@
         justify-content: flex-end;
         padding-bottom: clamp(20px, 5vw, 50px);
       }
+      /*【.page1 打开封面后第一页：欢迎文字+四张图片+下一页按钮】 */
       .page1 {
         display: none;
         z-index: 10;
         justify-content: space-between;
-        padding-top: clamp(6px, 4vw, 24px);
+        padding-top: clamp(6px, 4vw, 29px);
         padding-bottom: 4px;
       }
+      /*【.page2 点击下一页后第二页：邀请文字+接受按钮】 */
       .page2 {
         display: none;
         z-index: 10;
@@ -194,12 +215,14 @@
         gap: clamp(8px, 1.5vw, 14px);
       }
 
+      /*【.show-page1 给mask-inner添加该类，隐藏封面显示page1】 */
       .show-page1 .page0 {
         display: none;
       }
       .show-page1 .page1 {
         display: flex;
       }
+      /*【.show-page2 给mask-inner添加该类，隐藏封面/page1，显示page2】 */
       .show-page2 .page0 {
         display: none;
       }
@@ -213,12 +236,15 @@
       /* =========================================================
                🎬 8. 页面0：封面图片 + “打开”按钮
                ========================================================= */
+      /*【.page0-btn 封面底部【打开】按钮，独立样式，不继承btn-base】
+        修改封面按钮尺寸、字体必须改这里，修改.btn-base对此按钮无效
+      */
       .page0-btn {
-        padding: clamp(1px, 0.4vw, 3px) clamp(8px, 3vw, 26px);
+        padding: clamp(1px, 1vw, 8px) clamp(5px, 5vw, 35px);
         border: 1px solid #000;
         background: #efece3;
         cursor: pointer;
-        font-size: clamp(8px, 1.2vw, 16px);
+        font-size: clamp(3px, 4vw, 35px);
         transition: 0.2s;
       }
       .page0-btn:hover {
@@ -228,13 +254,15 @@
       /* =========================================================
                💬 9. 页面1：顶部欢迎文字 (两行)
                ========================================================= */
+      /*【.top-welcome page1顶部两行欢迎文字外层容器】 */
       .top-welcome {
         width: 100%;
         text-align: center;
         margin-bottom: clamp(1px, 2vw, 3px);
       }
+      /*【.top-welcome .type-line 仅欢迎两行文字的字号行高，单独覆盖全局type-line】 */
       .top-welcome .type-line {
-        font-size: clamp(3px, 1.5vw, 13px);
+        font-size: clamp(3px, 1.5vw, 20px);
         line-height: 1.6;
         margin: 0 auto;
         text-align: center;
@@ -245,26 +273,22 @@
                ========================================================= */
 
       /* ---- 10-A. 父容器：控制四张图片的整体布局 ---- */
+      /*【.box-row 四张图片横向排列父容器】 */
       .box-row {
         width: 90%;
         display: flex;
         justify-content: center;
         align-items: stretch;
-        gap: clamp(4px, 1.2vw, 12px); /* 间隙保持不变 */
+        gap: clamp(4px, 1.2vw, 12px);
         padding: 0 clamp(2px, 1vw, 10px);
         margin-bottom: clamp(0px, 2vw, 15px);
       }
 
       /* ---- 10-B. 单张图片基础样式：不再设固定宽度，用 flex 比例控制 ---- */
+      /*【.flat-box 四张图片统一基础容器样式】 */
       .flat-box {
-        /* -------- 🔽 使用 flex 比例分配宽度 -------- */
-        flex: 1 1 0; /* flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
-        /* 然后在子类中覆盖 flex-grow 来调整比例 */
-        /* ----------------------------------------- */
-
-        /* -------- 高度保持之前调整好的值 -------- */
+        flex: 1 1 0;
         height: clamp(80px, 10vw, 130px);
-
         border: 1px solid #00000000;
         background-size: cover;
         background-position: center;
@@ -273,6 +297,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         padding: clamp(4px, 1vw, 10px);
+        padding-top: clamp(5px, 3vw, 15px);
         gap: 1px;
         visibility: hidden;
         animation-fill-mode: forwards;
@@ -280,37 +305,40 @@
       }
 
       /* ---- 10-C. 四张图片各自的 flex-grow 比例 ---- */
-      /* 第一张 & 第三张：宽一些，flex-grow: 3 */
+      /*【.box-1 第一张图、.box-3第三张图 宽图比例】 */
       .box-1,
       .box-3 {
-        flex-grow: 3; /* 👈 调整此值可改变第一三张宽度（相对于第二四张） */
+        flex-grow: 3;
       }
-      /* 第二张 & 第四张：窄一些，flex-grow: 1 */
+      /*【.box-2 第二张图、.box-4第四张图 窄图比例】 */
       .box-2,
       .box-4 {
-        flex-grow: 1; /* 👈 调整此值可改变第二四张宽度（相对于第一三张） */
+        flex-grow: 1;
       }
 
       /* ---- 10-D. 各自背景图（可替换） ---- */
+      /*【.box-1 第一张背景图+显示动画】 */
       .box-1 {
         background-image: url("https://n.sinaimg.cn/sinakd20118/214/w2048h1366/20241101/8af6-f2c42e2356f4c886b889c8a0ee4a17c4.jpg");
-        padding-left: clamp(10px, 2vw, 30px);
         animation: instantShow 0s linear 3.4s forwards;
       }
+      /*【.box-2 第二张背景图+显示动画】 */
       .box-2 {
         background-image: url("https://pic.616pic.com/ys_bnew_img/00/64/95/G9REB94D6m.jpg");
         animation: instantShow 0s linear 3.4s forwards;
       }
+      /*【.box-3 第三张背景图+显示动画】 */
       .box-3 {
         background-image: url("https://n.sinaimg.cn/sinakd20118/214/w2048h1366/20241101/8af6-f2c42e2356f4c886b889c8a0ee4a17c4.jpg");
-        padding-left: clamp(10px, 2vw, 30px);
         animation: instantShow 0s linear 14.2s forwards;
       }
+      /*【.box-4 第四张背景图+显示动画】 */
       .box-4 {
         background-image: url("https://pic.616pic.com/ys_bnew_img/00/64/95/G9REB94D6m.jpg");
         animation: instantShow 0s linear 14.2s forwards;
       }
 
+      /*【@keyframes instantShow 无渐变瞬间显示动画，图片、按钮共用】 */
       @keyframes instantShow {
         from {
           visibility: hidden;
@@ -321,6 +349,7 @@
       }
 
       /* ---- 10-E. 方框内文字样式 ---- */
+      /*【.flat-box .type-line 四张图内部人物介绍文字，单独覆盖全局type-line字号】 */
       .flat-box .type-line {
         font-size: clamp(7px, 1.4vw, 13px);
         line-height: 1.4;
@@ -333,6 +362,7 @@
       /* =========================================================
                ⌨️ 11. 打字动画 (所有逐字出现文字)
                ========================================================= */
+      /*【.type-line 全局所有打字文字基础样式（欢迎、人物、邀请文字通用）】 */
       .type-line {
         font-size: clamp(7px, 1.4vw, 29px);
         line-height: 1.5;
@@ -341,6 +371,7 @@
         width: 0;
         animation-fill-mode: forwards;
       }
+      /*【@keyframes typing 文字逐字展开打字动画】 */
       @keyframes typing {
         from {
           width: 0;
@@ -351,14 +382,17 @@
       }
 
       /* ---- 顶部欢迎文字 ---- */
+      /*【.line1 第一行欢迎文字：欢迎来到无风镇。】 */
       .line1 {
         animation: typing 3.5s steps(12, end) 0.5s forwards;
       }
+      /*【.line4 第二行欢迎文字：愿你在小镇上度过愉快的一天。】 */
       .line4 {
         animation: typing 3.5s steps(14, end) 1.7s forwards;
       }
 
       /* ---- 第一张图片：斯隆的文字 ---- */
+      /*【.sl1 .sl2 .sl3 镇长斯隆三行介绍文字】 */
       .sl1 {
         animation: typing 1.8s steps(14, end) 11.4s forwards;
       }
@@ -370,6 +404,7 @@
       }
 
       /* ---- 第三张图片：麦克的文字 ---- */
+      /*【.mk1 .mk2 .mk3 副镇长麦克三行介绍文字】 */
       .mk1 {
         animation: typing 1.6s steps(12, end) 19.5s forwards;
       }
@@ -383,45 +418,59 @@
       /* =========================================================
                📨 12. 页面2：邀请文字
                ========================================================= */
+      /*【.invite-line page2中间邀请整行文字】 */
       .invite-line {
         animation: typing 4s steps(26, end) 1.2s forwards;
         text-align: center;
         margin: 0 auto;
       }
+      /*【.underline-w 邀请文字里字母w，棕色下划线】 */
       .underline-w {
         border-bottom: 2px solid #704828;
       }
 
       /* =========================================================
-               🔘 13. 通用按钮 & 特定按钮 (下一页/接受邀请)
+               🔘 13. 通用按钮 & 特定按钮 (下一页/接受邀请)clamp1是长，clamp2是宽
                ========================================================= */
+      /*【.btn-base 通用按钮基础样式：#nextPageBtn #acceptBtn 共用类】
+        修改下一页、接受按钮尺寸改这里，但ID权重更高，建议配合!important或写在ID下方
+      */
       .btn-base {
-        padding: clamp(1px, 0.4vw, 3px) clamp(8px, 3vw, 26px);
+        padding: clamp(1px, 1vw, 7px) clamp(5px, 3vw, 25px);
         border: 1px solid #000;
         background: #efece3;
         cursor: pointer;
-        font-size: clamp(8px, 1.2vw, 20px);
+        font-size: clamp(3px, 3vw, 20px);
         transition: 0.2s;
       }
       .btn-base:hover {
         background: #d9d1be;
       }
 
+      /*【#nextPageBtn page1底部【下一页】按钮 ID选择器，权重高于.btn-base】 */
       #nextPageBtn {
         align-self: center;
         margin-top: 0;
         visibility: hidden;
         animation: instantShow 0s linear 25s forwards;
         margin-bottom: clamp(1px, 2vw, 26px);
+        /* 如需单独修改此按钮尺寸，取消下面注释直接修改clamp */
+        /* padding: clamp(3px, 1vw, 25px) clamp(9px, 3vw, 35px);
+        font-size: clamp(8px, 1.2vw, 29px); */
       }
+      /*【#acceptBtn page2底部【接受邀请】按钮 ID选择器，权重高于.btn-base】 */
       #acceptBtn {
         visibility: hidden;
         animation: instantShow 0s linear 3.4s forwards;
+        /* 如需单独修改此按钮尺寸，取消下面注释直接修改clamp */
+        /* padding: clamp(3px, 1vw, 25px) clamp(9px, 3vw, 35px);
+        font-size: clamp(8px, 1.2vw, 29px); */
       }
 
       /* =========================================================
                🚫 14. 关闭弹窗
                ========================================================= */
+      /*【.mask-hide 给video-mask添加后，整个弹窗直接隐藏】 */
       .mask-hide {
         display: none !important;
       }
@@ -429,6 +478,7 @@
       /* =========================================================
                🔗 15. 底部链接栏
                ========================================================= */
+      /*【.bottom-link-row 页面最底部一行文字链接容器】 */
       .bottom-link-row {
         width: 90%;
         max-width: 1200px;
@@ -439,13 +489,16 @@
         gap: 12px;
         font-size: 12px;
       }
+      /*【.feedback-box 底部文字：小镇手册】 */
       .feedback-box {
         color: #000;
         cursor: pointer;
       }
+      /*【.divider-line 底部分隔竖线 |】 */
       .divider-line {
         color: #000;
       }
+      /*【.footer-link 底部跳转链接：如何入住无风镇】 */
       .footer-link {
         color: #7d776b;
         text-decoration: none;
@@ -472,13 +525,12 @@
         }
 
         .flat-box {
-          /* flex 比例不变，但高度降低使图片更扁 */
+          padding-top: clamp(15px, 2vw, 25px);
           height: clamp(35px, 4.5vw, 55px);
           padding: 3px 4px;
           flex-shrink: 1;
         }
 
-        /* 确保比例在手机端同样生效 */
         .box-1,
         .box-3 {
           flex-grow: 3;
@@ -488,10 +540,12 @@
           flex-grow: 1;
         }
 
+        /*【移动端：方框内人物文字单独缩小】 */
         .flat-box .type-line {
           font-size: clamp(4px, 1vw, 8px);
           line-height: 1.2;
         }
+        /*【移动端：顶部欢迎两行文字单独缩小】 */
         .top-welcome .type-line {
           font-size: clamp(6px, 1.2vw, 10px);
         }
@@ -502,6 +556,7 @@
         .flat-box {
           height: clamp(70px, 9vw, 110px);
         }
+        /*【平板：方框内人物文字字号】 */
         .flat-box .type-line {
           font-size: clamp(6px, 1.2vw, 10px);
         }
@@ -546,6 +601,7 @@
           <div class="mask-inner" id="maskWrap">
             <!-- ===== PAGE 0：封面图片 + 打开按钮 ===== -->
             <div class="page0" id="page0">
+              <!-- class:page0-btn 封面打开按钮 -->
               <button class="page0-btn" id="openBtn">打开</button>
             </div>
 
@@ -578,6 +634,7 @@
                 <div class="flat-box box-4"></div>
               </div>
 
+              <!-- class:btn-base + id:nextPageBtn 下一页按钮 -->
               <button class="btn-base" id="nextPageBtn">下一页</button>
             </div>
 
@@ -587,6 +644,7 @@
                 居民<span class="underline-w"> w </span
                 >向你发起了“到我家坐坐”的邀请。
               </div>
+              <!-- class:btn-base + id:acceptBtn 接受邀请按钮 -->
               <button class="btn-base" id="acceptBtn">接受邀请</button>
             </div>
           </div>
