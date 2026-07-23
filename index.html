@@ -561,6 +561,111 @@
           font-size: clamp(6px, 1.2vw, 10px);
         }
       }
+
+      /* =========================================================
+               🧩 17. 新增：后续流程步骤容器样式 (绝对定位，覆盖占位图)
+               ========================================================= */
+      /*【.step 每个步骤容器，默认隐藏，激活时显示】 */
+      .step {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 5; /* 低于弹窗(z-index:10)但高于占位图 */
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+      }
+      .step.active {
+        display: block;
+      }
+
+      /*【步骤内的视频自适应】 */
+      .step video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /*【步骤内的图片容器（背景图）】 */
+      .step-img {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: relative;
+      }
+
+      /* --- 按钮尺寸体系（比弹窗按钮略小） --- */
+      /*【.main-btn 主按钮（A/B/C/D/E/F/G）】 */
+      .main-btn {
+        position: absolute;
+        padding: 0.25em 0.9em;
+        font-size: clamp(10px, 1.2vw, 16px);
+        border: 1px solid #000;
+        background: #efece3;
+        cursor: pointer;
+        transition: 0.2s;
+        white-space: nowrap;
+        z-index: 2;
+      }
+      .main-btn:hover {
+        background: #d9d1be;
+      }
+
+      /*【.back-btn 返回按钮（颜色不同）】 */
+      .back-btn {
+        background: #c0b09a;
+      }
+      .back-btn:hover {
+        background: #a6927a;
+      }
+
+      /*【.tag-btn 标签按钮（更小）】 */
+      .tag-btn {
+        position: absolute;
+        padding: 0.1em 0.5em;
+        font-size: clamp(7px, 0.8vw, 11px);
+        border: 1px solid #000;
+        background: #d4cbb8;
+        cursor: pointer;
+        transition: 0.2s;
+        white-space: nowrap;
+        z-index: 2;
+      }
+      .tag-btn:hover {
+        background: #bfb49d;
+      }
+
+      /*【标签弹窗模态框：仅覆盖 .video-wrap 内部，不覆盖整个网页】 */
+      #tagModal {
+        position: absolute; /* 相对于 .video-wrap 定位 */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 30; /* 高于步骤容器 */
+        border-radius: inherit; /* 继承父容器圆角（如有） */
+      }
+      #tagModal.active {
+        display: flex;
+      }
+      #tagModal img {
+        max-width: 80%;
+        max-height: 80%;
+        border: 2px solid #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+      }
     </style>
   </head>
   <body>
@@ -651,6 +756,222 @@
           <!-- /.mask-inner -->
         </div>
         <!-- /.video-mask -->
+
+        <!-- =========================================================
+               🧩 18. 新增：后续流程步骤容器（全部置于video-wrap内，覆盖占位图）
+               ========================================================= -->
+
+        <!-- 步骤1：视频A -->
+        <div class="step" id="step1">
+          <video
+            id="videoA"
+            src="https://www.w3schools.com/html/mov_bbb.mp4"
+            muted
+          ></video>
+          <!-- 按钮B：视频A结束后显示，位置可自由调整 -->
+          <button
+            class="main-btn"
+            id="btnB"
+            style="
+              bottom: 10%;
+              left: 50%;
+              transform: translateX(-50%);
+              display: none;
+            "
+          >
+            按钮B
+          </button>
+        </div>
+
+        <!-- 步骤2：视频B -->
+        <div class="step" id="step2">
+          <video
+            id="videoB"
+            src="https://www.w3schools.com/html/mov_bbb.mp4"
+            muted
+          ></video>
+          <!-- 按钮C：视频B结束后显示 -->
+          <button
+            class="main-btn"
+            id="btnC"
+            style="
+              bottom: 10%;
+              left: 50%;
+              transform: translateX(-50%);
+              display: none;
+            "
+          >
+            按钮C
+          </button>
+        </div>
+
+        <!-- 步骤3：图片C（含3个按钮：2个标签 + 1个主按钮D） -->
+        <div class="step" id="step3">
+          <div
+            class="step-img"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/picC/800/400&quot;);
+            "
+          >
+            <!-- 标签按钮1 -->
+            <button class="tag-btn" data-tag="tag1" style="top: 20%; left: 10%">
+              标签1
+            </button>
+            <!-- 标签按钮2 -->
+            <button class="tag-btn" data-tag="tag2" style="top: 40%; left: 20%">
+              标签2
+            </button>
+            <!-- 按钮D -->
+            <button class="main-btn" id="btnD" style="bottom: 15%; right: 15%">
+              按钮D
+            </button>
+          </div>
+        </div>
+
+        <!-- 步骤4：图片D（含7个按钮：1个返回 + 3个标签 + 3个主按钮E/F/G） -->
+        <div class="step" id="step4">
+          <div
+            class="step-img"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/picD/800/400&quot;);
+            "
+          >
+            <!-- 返回按钮 -->
+            <button
+              class="main-btn back-btn"
+              id="backToC"
+              style="top: 5%; left: 5%"
+            >
+              返回
+            </button>
+            <!-- 三个标签 -->
+            <button class="tag-btn" data-tag="tag3" style="top: 20%; left: 15%">
+              标签3
+            </button>
+            <button class="tag-btn" data-tag="tag4" style="top: 20%; left: 35%">
+              标签4
+            </button>
+            <button class="tag-btn" data-tag="tag5" style="top: 20%; left: 55%">
+              标签5
+            </button>
+            <!-- 主按钮 E/F/G -->
+            <button class="main-btn" id="btnE" style="bottom: 20%; left: 10%">
+              按钮E
+            </button>
+            <button class="main-btn" id="btnF" style="bottom: 20%; left: 45%">
+              按钮F
+            </button>
+            <button class="main-btn" id="btnG" style="bottom: 20%; right: 10%">
+              按钮G
+            </button>
+          </div>
+        </div>
+
+        <!-- 步骤5：图片E（含3个按钮：2个标签 + 1个返回） -->
+        <div class="step" id="step5">
+          <div
+            class="step-img"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/picE/800/400&quot;);
+            "
+          >
+            <button
+              class="main-btn back-btn"
+              id="backToD1"
+              style="top: 5%; left: 5%"
+            >
+              返回
+            </button>
+            <button class="tag-btn" data-tag="tag6" style="top: 30%; left: 20%">
+              标签6
+            </button>
+            <button class="tag-btn" data-tag="tag7" style="top: 50%; left: 40%">
+              标签7
+            </button>
+          </div>
+        </div>
+
+        <!-- 步骤6：图片F（含4个按钮：3个标签 + 1个返回） -->
+        <div class="step" id="step6">
+          <div
+            class="step-img"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/picF/800/400&quot;);
+            "
+          >
+            <button
+              class="main-btn back-btn"
+              id="backToD2"
+              style="top: 5%; left: 5%"
+            >
+              返回
+            </button>
+            <button class="tag-btn" data-tag="tag8" style="top: 20%; left: 10%">
+              标签8
+            </button>
+            <button class="tag-btn" data-tag="tag9" style="top: 40%; left: 25%">
+              标签9
+            </button>
+            <button
+              class="tag-btn"
+              data-tag="tag10"
+              style="top: 60%; left: 50%"
+            >
+              标签10
+            </button>
+          </div>
+        </div>
+
+        <!-- 步骤7：图片G（含5个按钮：4个标签 + 1个返回） -->
+        <div class="step" id="step7">
+          <div
+            class="step-img"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/picG/800/400&quot;);
+            "
+          >
+            <button
+              class="main-btn back-btn"
+              id="backToD3"
+              style="top: 5%; left: 5%"
+            >
+              返回
+            </button>
+            <button
+              class="tag-btn"
+              data-tag="tag11"
+              style="top: 15%; left: 10%"
+            >
+              标签11
+            </button>
+            <button
+              class="tag-btn"
+              data-tag="tag12"
+              style="top: 30%; left: 30%"
+            >
+              标签12
+            </button>
+            <button
+              class="tag-btn"
+              data-tag="tag13"
+              style="top: 50%; left: 50%"
+            >
+              标签13
+            </button>
+            <button
+              class="tag-btn"
+              data-tag="tag14"
+              style="top: 70%; left: 70%"
+            >
+              标签14
+            </button>
+          </div>
+        </div>
+
+        <!-- ===== 标签弹窗模态框（仅覆盖 video-wrap 内部） ===== -->
+        <div id="tagModal">
+          <img id="tagImage" src="" alt="标签图" />
+        </div>
       </div>
       <!-- /.video-wrap -->
     </div>
@@ -681,11 +1002,149 @@
           maskWrap.classList.add("show-page2");
         });
 
+        // =========================================================
+        // 🧩 19. 新增：后续流程控制逻辑
+        // =========================================================
+
+        // 获取各个步骤元素
+        const step1 = document.getElementById("step1");
+        const step2 = document.getElementById("step2");
+        const step3 = document.getElementById("step3");
+        const step4 = document.getElementById("step4");
+        const step5 = document.getElementById("step5");
+        const step6 = document.getElementById("step6");
+        const step7 = document.getElementById("step7");
+        const allSteps = [step1, step2, step3, step4, step5, step6, step7];
+
+        // 获取视频元素
+        const videoA = document.getElementById("videoA");
+        const videoB = document.getElementById("videoB");
+
+        // 获取各个按钮
+        const btnB = document.getElementById("btnB");
+        const btnC = document.getElementById("btnC");
+        const btnD = document.getElementById("btnD");
+        const btnE = document.getElementById("btnE");
+        const btnF = document.getElementById("btnF");
+        const btnG = document.getElementById("btnG");
+        const backToC = document.getElementById("backToC");
+        const backToD1 = document.getElementById("backToD1");
+        const backToD2 = document.getElementById("backToD2");
+        const backToD3 = document.getElementById("backToD3");
+
+        // 模态框
+        const modal = document.getElementById("tagModal");
+        const tagImage = document.getElementById("tagImage");
+
+        // 辅助函数：切换到指定步骤
+        function goToStep(stepId) {
+          allSteps.forEach((el) => el.classList.remove("active"));
+          if (stepId) {
+            const target = document.getElementById(stepId);
+            if (target) target.classList.add("active");
+          }
+        }
+
+        // 关闭弹窗后开始流程
         acceptBtn.addEventListener("click", function () {
           maskMain.classList.add("mask-hide");
+          // 隐藏占位图（避免遮挡）
+          document.querySelector(".video-placeholder").style.display = "none";
+          // 进入步骤1（视频A）
+          goToStep("step1");
+          videoA.play();
+          // 视频A结束显示按钮B
+          videoA.onended = function () {
+            btnB.style.display = "block";
+          };
         });
 
-        maskWrap.classList.remove("show-page1", "show-page2");
+        // 按钮B：切换到视频B
+        btnB.addEventListener("click", function () {
+          goToStep("step2");
+          videoB.play();
+          videoB.onended = function () {
+            btnC.style.display = "block";
+          };
+        });
+
+        // 按钮C：切换到图片C
+        btnC.addEventListener("click", function () {
+          goToStep("step3");
+        });
+
+        // 按钮D：切换到图片D
+        btnD.addEventListener("click", function () {
+          goToStep("step4");
+        });
+
+        // 返回按钮：从图片D回到图片C
+        backToC.addEventListener("click", function () {
+          goToStep("step3");
+        });
+
+        // 按钮E：切换到图片E
+        btnE.addEventListener("click", function () {
+          goToStep("step5");
+        });
+
+        // 按钮F：切换到图片F
+        btnF.addEventListener("click", function () {
+          goToStep("step6");
+        });
+
+        // 按钮G：切换到图片G
+        btnG.addEventListener("click", function () {
+          goToStep("step7");
+        });
+
+        // 各图片内的返回按钮（回到图片D）
+        [backToD1, backToD2, backToD3].forEach((btn) => {
+          btn.addEventListener("click", function () {
+            goToStep("step4");
+          });
+        });
+
+        // ===== 标签按钮：弹出图片注释（在 video-wrap 内部显示） =====
+        // 模拟标签图片映射（可替换为真实图片链接）
+        const tagMap = {
+          tag1: "https://picsum.photos/seed/tag1/400/300",
+          tag2: "https://picsum.photos/seed/tag2/400/300",
+          tag3: "https://picsum.photos/seed/tag3/400/300",
+          tag4: "https://picsum.photos/seed/tag4/400/300",
+          tag5: "https://picsum.photos/seed/tag5/400/300",
+          tag6: "https://picsum.photos/seed/tag6/400/300",
+          tag7: "https://picsum.photos/seed/tag7/400/300",
+          tag8: "https://picsum.photos/seed/tag8/400/300",
+          tag9: "https://picsum.photos/seed/tag9/400/300",
+          tag10: "https://picsum.photos/seed/tag10/400/300",
+          tag11: "https://picsum.photos/seed/tag11/400/300",
+          tag12: "https://picsum.photos/seed/tag12/400/300",
+          tag13: "https://picsum.photos/seed/tag13/400/300",
+          tag14: "https://picsum.photos/seed/tag14/400/300",
+        };
+
+        // 为所有标签按钮绑定点击事件
+        document.querySelectorAll(".tag-btn").forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const key = this.dataset.tag;
+            if (tagMap[key]) {
+              tagImage.src = tagMap[key];
+              modal.classList.add("active");
+            }
+          });
+        });
+
+        // 点击模态框背景关闭
+        modal.addEventListener("click", function (e) {
+          if (e.target === this) {
+            this.classList.remove("active");
+          }
+        });
+
+        // 初始状态：所有步骤隐藏，弹窗显示
+        // 原有代码已保证弹窗显示，无需额外操作
       })();
     </script>
   </body>
